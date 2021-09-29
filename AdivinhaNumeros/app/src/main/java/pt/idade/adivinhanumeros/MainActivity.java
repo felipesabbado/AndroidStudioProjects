@@ -3,6 +3,7 @@ package pt.idade.adivinhanumeros;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
 
     EditText palpite;
 
+    Random rand = new Random();
+    int num = rand.nextInt(21);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,13 +27,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tentativa(View v){
-        Random rand = new Random();
-        String num = String.valueOf(rand.nextInt(21));
+        Log.e("Valor", String.valueOf(num));
+        int value = Integer.parseInt(palpite.getText().toString());
 
-        if (palpite.equals(num)){
+        if (value == num){
             Toast.makeText(this, "Acertou!", Toast.LENGTH_SHORT).show();
+        } else if (value < num){
+            Toast.makeText(this, "Maior. Tente novamente.", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Tente novamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Menor. Tente novamente.", Toast.LENGTH_SHORT).show();
         }
     }
 }
