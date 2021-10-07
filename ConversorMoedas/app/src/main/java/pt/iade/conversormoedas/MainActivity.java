@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     TextView msg;
     EditText value;
     Button converter;
-    static double rate = 1.12;
+    static double rate = 0.87;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         msg = findViewById(R.id.msg);
         value = findViewById(R.id.value);
         converter = findViewById(R.id.converter);
+        image = findViewById(R.id.image);
     }
 
     public void converter(View v){
@@ -37,10 +38,17 @@ public class MainActivity extends AppCompatActivity {
         double valueDollar = Double.parseDouble(value.getText().toString());
         double valueEuros = valueDollar * rate;
         DecimalFormat round = new DecimalFormat("#.##");
+        String mensagem;
 
-        msg.setText(String.valueOf("US$" + round.format(valueDollar) + " equivale a €" + round.format(valueEuros)));
+        if (value.getText().toString().isEmpty()){
+            mensagem = "Digite um valor";
+        } else {
+            mensagem = "US$" + round.format(valueDollar) + " equivale a €" + round.format(valueEuros);
+            String aviso = "Convertendo...";
+            Toast.makeText(this, aviso, Toast.LENGTH_SHORT).show();
+            image.setImageResource(R.drawable.euro);
+        }
 
-        String aviso = "Convertendo...";
-        Toast.makeText(this, aviso, Toast.LENGTH_SHORT).show();
+        msg.setText(mensagem);
     }
 }
