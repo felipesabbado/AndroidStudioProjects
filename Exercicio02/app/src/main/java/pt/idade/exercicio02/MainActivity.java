@@ -3,7 +3,6 @@ package pt.idade.exercicio02;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             numeroTestar = new Numero(Integer.parseInt(number.getText().toString()));
 
-            mensagem = "" + numeroTestar;
+            mensagem = "" + number.getText().toString();
 
             if (numeroTestar.Primo() && numeroTestar.Quadrado()){
                 mensagem += " é quadrado e é primo!!";

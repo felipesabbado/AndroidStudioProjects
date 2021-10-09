@@ -2,7 +2,7 @@ package pt.idade.exercicio02;
 
 public class Numero {
 
-    private int numeroInserido;
+    private double numeroInserido;
 
     public Numero(int n) {
         this.numeroInserido = n;
@@ -22,7 +22,7 @@ public class Numero {
         int flag = 0;
 
         if (this.numeroInserido == 0 || this.numeroInserido == 1){
-            flag = 0;
+            flag = 1;
         } else {
             for(int i=2; i <= this.numeroInserido/2; i++){
                 if(this.numeroInserido % i == 0){
@@ -33,9 +33,9 @@ public class Numero {
         }
 
         if(flag == 0){
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         }
     }
 }
