@@ -34,17 +34,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void converter(View v){
         Log.i("INFO", "Converter");
-
-        double valueDollar = Double.parseDouble(value.getText().toString());
-        double valueEuros = valueDollar * rate;
         DecimalFormat round = new DecimalFormat("#.##");
         String mensagem;
+        String aviso;
 
         if (value.getText().toString().isEmpty()){
-            mensagem = "Digite um valor";
+            image.setImageResource(R.drawable.cifrao);
+            mensagem = "Digite um valor válido";
+            aviso = "Digite um valor";
+            Toast.makeText(this, aviso, Toast.LENGTH_SHORT).show();
         } else {
+            double valueDollar = Double.parseDouble(value.getText().toString());
+            double valueEuros = valueDollar * rate;
             mensagem = "US$" + round.format(valueDollar) + " equivale a €" + round.format(valueEuros);
-            String aviso = "Convertendo...";
+            aviso = "Convertendo...";
             Toast.makeText(this, aviso, Toast.LENGTH_SHORT).show();
             image.setImageResource(R.drawable.euro);
         }
