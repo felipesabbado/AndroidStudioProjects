@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     EditText et_nomeAluno;
     EditText et_numAluno;
     EditText et_idadeAluno;
-    Disciplina uc1 = new Disciplina("Dispositivos Móveis");
+    Disciplina uc1;
 
 
 
@@ -25,13 +25,15 @@ public class MainActivity extends AppCompatActivity {
         et_nomeAluno = findViewById(R.id.et_nomeAluno);
         et_numAluno = findViewById(R.id.et_numAluno);
         et_idadeAluno = findViewById(R.id.et_idadeAluno);
+
+        uc1 = new Disciplina("Dispositivos Móveis");
     }
 
     public void inserir(View view){
         String info = "";
-        if (et_nomeAluno.getText().toString().isEmpty() ||
-                et_numAluno.getText().toString().isEmpty() ||
-                et_idadeAluno.getText().toString().isEmpty()){
+        if (this.et_nomeAluno.getText().toString().isEmpty() ||
+                this.et_numAluno.getText().toString().isEmpty() ||
+                this.et_idadeAluno.getText().toString().isEmpty()){
             Toast.makeText(this, "Favor inserir todos os dados!", Toast.LENGTH_SHORT).show();
         } else {
             String nome = et_nomeAluno.getText().toString();

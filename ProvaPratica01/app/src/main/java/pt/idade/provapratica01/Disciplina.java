@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 public class Disciplina {
     private final String nome;
-    private final ArrayList<Aluno> alunos = new ArrayList<>();
+    private ArrayList<Aluno> alunos;
 
     public Disciplina(String nome) {
         this.nome = nome;
+        this.alunos = new ArrayList<Aluno>();
     }
 
     public String getNome() {

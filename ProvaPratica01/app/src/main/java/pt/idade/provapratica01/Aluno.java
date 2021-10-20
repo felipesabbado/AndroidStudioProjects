@@ -6,9 +6,10 @@ public class Aluno {
     private final String nome;
     private int num;
     private int idade;
-    private final boolean[] presencas = new boolean[14];
+    private final boolean[] presencas = new boolean[14]; // Não precisava inicializar o array
     private final Random random = new Random();
 
+    // Construtores
     public Aluno(String nome){
         this.nome = nome;
     }
@@ -22,6 +23,15 @@ public class Aluno {
         }
     }
 
+    /* Métodos | Funções auxiliares (opcional)
+    * private void gerarPresencas() {
+    *   for (int i = 0; i < this.presencas.length; i++){
+            this.presencas[i] = random.nextBoolean();
+        }
+      }
+    * */
+
+    // Getter and Setters
     public String getNome() {
         return nome;
     }
@@ -36,6 +46,18 @@ public class Aluno {
 
     public boolean getPresencas(int num) {
         return presencas[num];
+    }
+
+    // Consultar presença na aula com validação (opcional)
+    public boolean consultaPresenca(int nAula){
+        int pos = nAula -1;
+        boolean pres = false;
+
+        if (pos >=0 && pos < this.presencas.length){
+            pres = this.presencas[pos];
+        }
+
+        return pres;
     }
 
     public int getLengthPresenca(){
