@@ -21,12 +21,13 @@
         app:rowCount="4">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/bt_doYou"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="fill"
-            android:onClick="speak"
+            android:onClick="PlaySound"
+            android:tag="doyouspeakenglish"
             android:text="DO YOU \nSPEAK ENGLISH"
             android:textAlignment="center"
             app:layout_columnWeight="2"
@@ -34,12 +35,13 @@
             app:layout_rowWeight="1" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/bt_good"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="fill"
-            android:onClick="good"
+            android:onClick="PlaySound"
+            android:tag="goodevening"
             android:text="GOOD EVENING"
             android:textAlignment="center"
             app:layout_columnWeight="2"
@@ -47,12 +49,13 @@
             app:layout_rowWeight="1" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/bt_hello"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="fill"
-            android:onClick="hello"
+            android:onClick="PlaySound"
+            android:tag="hello"
             android:text="HELLO"
             android:textAlignment="center"
             app:layout_columnWeight="2"
@@ -60,12 +63,13 @@
             app:layout_rowWeight="1" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/bt_howAre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="fill"
-            android:onClick="howAre"
+            android:onClick="PlaySound"
+            android:tag="howareyou"
             android:text="HOW ARE YOU?"
             android:textAlignment="center"
             app:layout_columnWeight="2"
@@ -73,12 +77,13 @@
             app:layout_rowWeight="1" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/bt_iLive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="fill"
-            android:onClick="iLive"
+            android:onClick="PlaySound"
+            android:tag="ilivein"
             android:text="I LIVE IN..."
             android:textAlignment="center"
             app:layout_columnWeight="2"
@@ -86,12 +91,13 @@
             app:layout_rowWeight="1" />
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/bt_myName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="fill"
-            android:onClick="myName"
+            android:onClick="PlaySound"
+            android:tag="mynameis"
             android:text="MY NAME IS..."
             android:textAlignment="center"
             app:layout_columnWeight="2"
@@ -99,12 +105,13 @@
             app:layout_rowWeight="1" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/bt_please"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="fill"
-            android:onClick="please"
+            android:onClick="PlaySound"
+            android:tag="please"
             android:text="PLEASE"
             android:textAlignment="center"
             app:layout_columnWeight="2"
@@ -112,12 +119,13 @@
             app:layout_rowWeight="1" />
 
         <Button
-            android:id="@+id/button8"
+            android:id="@+id/bt_welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="fill"
-            android:onClick="welcome"
+            android:onClick="PlaySound"
+            android:tag="welcome"
             android:text="WELCOME"
             android:textAlignment="center"
             app:layout_columnWeight="2"
