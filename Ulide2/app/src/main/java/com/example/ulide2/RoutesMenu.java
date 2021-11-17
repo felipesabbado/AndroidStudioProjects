@@ -45,7 +45,7 @@ public class RoutesMenu extends AppCompatActivity {
             objUsTu = null;
         }
 
-        JSONObject obj = null;
+        JSONObject obj;
         arrayListRoutes = new ArrayList<>();
         arrayListRoutesId = new ArrayList<>();
         if(objUsTu != null) {
@@ -78,6 +78,7 @@ public class RoutesMenu extends AppCompatActivity {
                 Log.e("INFO", "O nome da rota é: " + items.get(i));
                 Log.e("INFO", "O id da rota é: " + id.get(i));
                 Intent spotsMenu = new Intent(getApplicationContext(), SpotsMenu.class);
+                spotsMenu.putExtra("id", id.get(i));
                 startActivity(spotsMenu);
             }
         });
