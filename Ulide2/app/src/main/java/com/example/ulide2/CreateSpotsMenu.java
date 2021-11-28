@@ -3,10 +3,12 @@ package com.example.ulide2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.ulide2.downloads.JSONObjDownloader;
+import com.example.ulide2.downloads.CreatSpotsDownloads;
+import com.example.ulide2.downloads.DownloadTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +32,7 @@ public class CreateSpotsMenu extends AppCompatActivity {
 
         image = findViewById(R.id.imageView);
 
-        JSONObjDownloader task = new JSONObjDownloader();
+        CreatSpotsDownloads task = new CreatSpotsDownloads();
         try {
             objectWeather = task.execute("http://ulide.herokuapp.com/api/userAchievements/1").get();
             objectWeatherToString = objectWeather.toString();

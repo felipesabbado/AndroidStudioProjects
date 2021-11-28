@@ -10,7 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.ulide2.downloads.JSONArrayDownloader;
+import com.example.ulide2.downloads.RoutesDownloads;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,13 +20,13 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class RoutesMenu extends AppCompatActivity {
-
     ListView listViewRoutes;
     ArrayList<String> routes;
     ArrayList<String> routesId;
     ArrayList<String> routesName;
     ArrayAdapter<String> adapterRoutes;
     JSONArray objRoutesAvg = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class RoutesMenu extends AppCompatActivity {
 
         listViewRoutes = findViewById(R.id.ListViewPopularRoutes);
 
-        JSONArrayDownloader task = new JSONArrayDownloader();
+        RoutesDownloads task = new RoutesDownloads();
         try {
             objRoutesAvg = task.execute("https://ulide.herokuapp.com/api/routes/avg").get();
         } catch (ExecutionException | InterruptedException e) {
@@ -68,7 +68,7 @@ public class RoutesMenu extends AppCompatActivity {
 
 
     public void InitializeAdapter(){
-        adapterRoutes = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, routes);
+        adapterRoutes = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, routes);
         listViewRoutes.setAdapter(adapterRoutes);
         createListViewClickItemEvent(listViewRoutes, routes, routesId, routesName);
     }
