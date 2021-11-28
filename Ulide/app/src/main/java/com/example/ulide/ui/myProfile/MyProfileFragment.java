@@ -4,23 +4,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.SurfaceControl;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.ulide.R;
 import com.example.ulide.databinding.FragmentMyProfileBinding;
 import com.example.ulide.downloaders.JSONArrayDownloader;
+import com.example.ulide.ui.home.MapsHomeFragment;
 import com.example.ulide.ui.spotsFromRoute.SpotsFromRouteFragment;
 
 import org.json.JSONArray;
@@ -32,26 +36,62 @@ import java.util.concurrent.ExecutionException;
 
 public class MyProfileFragment extends Fragment {
 
+    private MyProfileViewModel myProfileViewModel;
     private FragmentMyProfileBinding binding;
-    private ListView listViewRoutes;
 
-    ArrayList<String> routes;
-    ArrayList<String> routesId;
-    ArrayList<String> routesName;
-    ArrayAdapter<String> adapterRoutes;
-    JSONArray objRoutesAvg = null;
+
+    public ListView listViewRoutes;
+    public ArrayList<String> routes;
+    public ArrayList<String> routesId;
+    public ArrayList<String> routesName;
+    public ArrayAdapter<String> adapterRoutes;
+    public JSONArray objRoutesAvg = null;
+    NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+
+        myProfileViewModel =
+                new ViewModelProvider(this).get(MyProfileViewModel.class);
+
         binding = FragmentMyProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        listViewRoutes = binding.listRoutes;
+        final ListView listViewRoutes = binding.listRoutes;
 
-        JSONArrayDownloader task = new JSONArrayDownloader();
+
+        myProfileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                InicializerListView();
+                listViewRoutes.setAdapter(adapterRoutes);
+                listViewRoutes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Intent SpotsFromRouteFragment = new Intent(getActivity(), SpotsFromRouteFragment.class);
+                        SpotsFromRouteFragment.putExtra("id", routesId.get(i));
+                        SpotsFromRouteFragment.putExtra("name", routesName.get(i));
+
+                        // Create new fragment and transaction
+                        FragmentManager fragmentManager = getParentFragmentManager();
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        transaction.setReorderingAllowed(true);
+
+                        transaction.replace(R.id.nav_spotsFromRouteFragment, SpotsFromRouteFragment.class, null);
+
+                        transaction.commit();
+                    }
+                });
+            }
+        });
+        return root;
+    }
+
+    private void InicializerListView(){
+        JSONArrayDownloader taskJson = new JSONArrayDownloader();
         try {
-            objRoutesAvg = task.execute("https://ulide.herokuapp.com/api/routes/avg").get();
+            objRoutesAvg = taskJson.execute("https://ulide.herokuapp.com/api/routes/avg").get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
             objRoutesAvg = null;
@@ -75,36 +115,11 @@ public class MyProfileFragment extends Fragment {
                 }
             }
             Log.e("Array List", routes.toString());
-            InitializeAdapter();
+            adapterRoutes = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, routes);
         }
-
-        return root;
     }
 
-    public void InitializeAdapter(){
-        adapterRoutes = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, routes);
-        listViewRoutes.setAdapter(adapterRoutes);
-        createListViewClickItemEvent(listViewRoutes, routes, routesId, routesName);
-    }
 
-    private void createListViewClickItemEvent(ListView list, final ArrayList<String> items,
-                                              final ArrayList<String> id, final ArrayList<String> name) {
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("INFO", "O nome da rota é: " + items.get(i));
-                Log.e("INFO", "O id da rota é: " + id.get(i));
-                Log.e("INFO", name.get(i));
-                // Fazer a ligação com o SpotsFromRouteFragment
-                Intent spotsFromRoute = new Intent(getContext(), SpotsFromRouteFragment.class);
-                spotsFromRoute.putExtra("id", id.get(i));
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().
-                        replace(R.id.nav_host_fragment_container, SpotsFromRouteFragment.class, null).
-                        setReorderingAllowed(true).addToBackStack("Spots").commit();
-            }
-        });
-    }
 
     @Override
     public void onDestroyView() {

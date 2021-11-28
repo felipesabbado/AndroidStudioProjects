@@ -1,8 +1,12 @@
 package com.example.ulide.ui.spotsFromRoute;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -11,10 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.example.ulide.R;
-import com.example.ulide.databinding.FragmentMyProfileBinding;
+import com.example.ulide.databinding.SpotsFromRouteFragmentBinding;
 import com.example.ulide.downloaders.JSONArrayDownloader;
 
 import org.json.JSONArray;
@@ -26,45 +28,53 @@ import java.util.concurrent.ExecutionException;
 
 public class SpotsFromRouteFragment extends Fragment {
 
-    private FragmentMyProfileBinding binding;
-    private ListView listViewSpots;
-
+    ListView listViewRouteSpots;
     ArrayList<String> spots;
     ArrayList<String> spotsId;
-    ArrayList<String> spotsName;
     ArrayAdapter<String> adapterSpots;
-    JSONArray objSpots = null;
+    JSONArray spotsArray = null;
+    private SpotsFromRouteViewModel spotsFromRouteViewModel;
+    private SpotsFromRouteFragmentBinding binding;
 
-    public SpotsFromRouteFragment() {
-        // Required empty public constructor
+    public static SpotsFromRouteFragment newInstance() {
+        return new SpotsFromRouteFragment();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        binding = FragmentMyProfileBinding.inflate(inflater, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+
+        final ListView listViewRouteSpots = binding.ListViewRouteSpots;
+
+        spotsFromRouteViewModel =
+                new ViewModelProvider(this).get(SpotsFromRouteViewModel.class);
+
+        binding = SpotsFromRouteFragmentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        listViewSpots = binding.listRoutes;
 
+        return root;
+    }
+
+    private void InicializeListView(){
+        JSONArrayDownloader task = new JSONArrayDownloader();
         Intent intent = getActivity().getIntent();
         String id = intent.getStringExtra("id");
-
-        JSONArrayDownloader task = new JSONArrayDownloader();
+        String url = "https://ulide.herokuapp.com/api/routes/" + id + "/spots";
         try {
-            objSpots = task.execute("https://ulide.herokuapp.com/api/routes/" + id + "/spots").get();
+            spotsArray = task.execute(url).get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
-            objSpots = null;
+            spotsArray = null;
         }
 
         JSONObject obj;
         spots = new ArrayList<>();
         spotsId = new ArrayList<>();
-        if (objSpots != null) {
-            for (int i = 0; i < objSpots.length(); i++) {
+        if (spotsArray != null) {
+            for (int i = 0; i < spotsArray.length(); i++) {
                 try {
-                    obj = objSpots.getJSONObject(i);
+                    obj = spotsArray.getJSONObject(i);
                     spots.add(obj.getString("spName"));
                     spotsId.add(obj.getString("id"));
                 } catch (JSONException e) {
@@ -72,14 +82,16 @@ public class SpotsFromRouteFragment extends Fragment {
                 }
             }
             Log.e("SPOTS", spots.toString());
-            InitalizeAdapter();
+            adapterSpots = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, spots);
+            listViewRouteSpots.setAdapter(adapterSpots);
         }
-
-        return root;
     }
 
-    public void InitalizeAdapter() {
-        adapterSpots = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, spots);
-        listViewSpots.setAdapter(adapterSpots);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        spotsFromRouteViewModel = new ViewModelProvider(this).get(SpotsFromRouteViewModel.class);
+        // TODO: Use the ViewModel
     }
+
 }
