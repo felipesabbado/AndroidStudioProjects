@@ -1,16 +1,16 @@
-package com.example.jsondemo;
+package com.example.jsondemo.downloadtasks;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DownloadTask extends AsyncTask<String, Void, JSONArray> {
+public class GetPersons extends AsyncTask<String, Void, JSONArray> {
 
     @Override
     protected JSONArray doInBackground(String... urls) {
@@ -35,8 +35,9 @@ public class DownloadTask extends AsyncTask<String, Void, JSONArray> {
                 data = reader.read();
             }
 
-            Log.e("JSONObj", result);
             JSONArray arr = new JSONArray(result);
+
+            Log.i("JSON ", result);
 
             return arr;
 
@@ -45,10 +46,5 @@ public class DownloadTask extends AsyncTask<String, Void, JSONArray> {
             return null;
         }
 
-    }
-
-    @Override
-    protected void onPostExecute(JSONArray jsonArray) {
-        super.onPostExecute(jsonArray);
     }
 }
