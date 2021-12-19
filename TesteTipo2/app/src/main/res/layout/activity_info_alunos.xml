@@ -8,28 +8,11 @@
     android:gravity="center"
     tools:context=".InfoAlunos">
 
-    <TextView
-        android:id="@+id/tvNomeAluno"
+    <ListView
+        android:id="@+id/listViewInfoAlunos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10sp"
-        android:textSize="20sp"
-        android:layout_gravity="center"/>
-
-    <TextView
-        android:id="@+id/tvIdadeAluno"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10sp"
-        android:textSize="20sp"
-        android:layout_gravity="center"/>
-
-    <TextView
-        android:id="@+id/tvNumeroAluno"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10sp"
-        android:textSize="20sp"
+        android:layout_margin="16dp"
         android:layout_gravity="center"/>
 
 </LinearLayout>

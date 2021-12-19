@@ -4,24 +4,32 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class InfoAlunos extends AppCompatActivity {
-    private TextView nome, idade, numero;
-    Intent intent;
+    private ListView listViewInfoAlunos;
+    private Intent intent;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> infoAlunos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_alunos);
 
-        nome = findViewById(R.id.tvNomeAluno);
-        idade = findViewById(R.id.tvIdadeAluno);
-        numero = findViewById(R.id.tvNumeroAluno);
+        listViewInfoAlunos = findViewById(R.id.listViewInfoAlunos);
 
         intent = getIntent();
-        nome.setText("Nome: " + intent.getExtras().getString("name"));
-        idade.setText("Idade: " + String.valueOf(intent.getExtras().getInt("idade")));
-        numero.setText("Número: " + String.valueOf(intent.getExtras().getInt("numero")));
+        infoAlunos = new ArrayList<>();
+        infoAlunos.add("Nome: " + intent.getExtras().getString("name"));
+        infoAlunos.add("Idade: " + String.valueOf(intent.getExtras().getInt("idade")));
+        infoAlunos.add("Número: " + String.valueOf(intent.getExtras().getInt("numero")));
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, infoAlunos);
+        listViewInfoAlunos.setAdapter(adapter);
     }
 }
